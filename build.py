@@ -74,7 +74,7 @@ def build_windows(args):
     print("开始为Windows构建应用程序...")
     
     # 默认使用英文名称，并添加版本号
-    app_name_en_exe = f"{APP_NAME_EN_EXE}-v{VERSION}"
+    app_name_en_exe = f"{APP_NAME_EN_EXE}-windows-v{VERSION}"
     
     # 检查图标文件是否存在
     if not os.path.exists(ICON_FILE_WINDOWS):
@@ -165,7 +165,7 @@ def build_macos(args):
     # 默认创建DMG安装包，除非明确指定不创建
     if not args.no_dmg:
         # 动态添加版本号到安装程序名称
-        installer_name = f"{APP_NAME_INSTALLER}-v{VERSION}"
+        installer_name = f"{APP_NAME_INSTALLER}-macos-v{VERSION}"
         create_dmg(installer_name)
     else:
         print("已跳过DMG安装包创建")
@@ -260,7 +260,7 @@ def build_linux(args):
     # 默认创建DEB安装包，除非明确指定不创建
     if not args.no_deb:
         # 动态添加版本号到安装程序名称
-        installer_name = f"{APP_NAME_INSTALLER}-v{VERSION}"
+        installer_name = f"{APP_NAME_INSTALLER}-linux-v{VERSION}"
         create_deb_package(installer_name, VERSION)
     else:
         print("已跳过DEB安装包创建")
