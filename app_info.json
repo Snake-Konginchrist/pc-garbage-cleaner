@@ -1,0 +1,14 @@
+{
+    "app_name": "斯黄电脑垃圾清理器",
+    "app_name_en": "SK PC Garbage Cleaner",
+    "version": "1.0.0",
+    "main_script": "main.py",
+    "icon_dir": "ui/resources",
+    "icon_file_windows": "ui/resources/icon.ico",
+    "icon_file_macos": "ui/resources/icon.icns",
+    "icon_file_linux": "ui/resources/icon.png",
+    "maintainer": "SK Studio",
+    "maintainer_email": "developer@skstudio.cn",
+    "description": "A tool for cleaning garbage files from your computer.",
+    "description_zh": "支持Windows、MacOS和Linux系统的电脑垃圾清理工具。"
+} 

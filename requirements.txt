@@ -1,0 +1,5 @@
+PyQt5
+psutil
+send2trash
+matplotlib
+numpy

@@ -1,0 +1,61 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# PyInstaller
+*.spec
+*.manifest
+*.manifest.temp
+
+# Virtual environments
+venv/
+env/
+ENV/
+.env
+.venv
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.spyderproject
+.ropeproject
+
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Application specific
+*.log
+*.bak
+*.tmp
+*.temp
+
+# Build artifacts
+*.pyc
+*.pyo
+
+# Data and cache dirs
+.cache/
+data/
+output/
+logs/
+
+# Debug and profiling
+*.prof
+*.lprof
+.coverage
+htmlcov/ 
