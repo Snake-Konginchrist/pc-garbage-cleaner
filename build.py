@@ -39,6 +39,8 @@ APP_INFO = load_app_info()
 # 从APP_INFO获取各种配置
 APP_NAME = APP_INFO["app_name"]
 APP_NAME_EN = APP_INFO["app_name_en"]
+APP_NAME_EN_EXE = APP_INFO["app_name_en_exe"]
+APP_NAME_INSTALLER = APP_INFO["app_name_installer"]
 VERSION = APP_INFO["version"]
 MAIN_SCRIPT = APP_INFO["main_script"]
 ICON_DIR = APP_INFO["icon_dir"]
@@ -71,8 +73,8 @@ def build_windows(args):
     """为Windows构建应用程序"""
     print("开始为Windows构建应用程序...")
     
-    # 默认使用英文名称
-    app_name = APP_NAME_EN
+    # 默认使用英文名称，并添加版本号
+    app_name_en_exe = f"{APP_NAME_EN_EXE}-v{VERSION}"
     
     # 检查图标文件是否存在
     if not os.path.exists(ICON_FILE_WINDOWS):
@@ -84,7 +86,7 @@ def build_windows(args):
     # 构建命令
     cmd = [
         "pyinstaller",
-        f"--name={app_name}",
+        f"--name={app_name_en_exe}",
         "--windowed",
         "--onefile",  # 默认生成单个可执行文件
         icon_param,
@@ -111,15 +113,15 @@ def build_windows(args):
     subprocess.call(python_cmd)
     
     print("Windows应用程序构建完成!")
-    print(f"可执行文件位于: dist/{app_name}.exe")
+    print(f"可执行文件位于: dist/{app_name_en_exe}.exe")
 
 def build_macos(args):
     """为macOS构建应用程序"""
     print("开始为macOS构建应用程序...")
     
     # 默认使用英文名称
-    app_name = APP_NAME_EN
-    
+    app_name_en = APP_NAME_EN
+
     # 检查图标文件是否存在
     if not os.path.exists(ICON_FILE_MACOS):
         print(f"警告: 图标文件 {ICON_FILE_MACOS} 不存在，将使用默认图标")
@@ -130,7 +132,7 @@ def build_macos(args):
     # 构建命令
     cmd = [
         "pyinstaller",
-        f"--name={app_name}",
+        f"--name={app_name_en}",
         "--windowed",
         icon_param,
         f"--add-data={ICON_DIR}:{ICON_DIR}",
@@ -158,11 +160,13 @@ def build_macos(args):
     subprocess.call(python_cmd)
     
     print("macOS应用程序构建完成!")
-    print(f"应用程序位于: dist/{app_name}.app")
+    print(f"应用程序位于: dist/{app_name_en}.app")
     
     # 默认创建DMG安装包，除非明确指定不创建
     if not args.no_dmg:
-        create_dmg(app_name)
+        # 动态添加版本号到安装程序名称
+        installer_name = f"{APP_NAME_INSTALLER}-v{VERSION}"
+        create_dmg(installer_name)
     else:
         print("已跳过DMG安装包创建")
 
@@ -211,7 +215,7 @@ def build_linux(args):
     print("开始为Linux构建应用程序...")
     
     # Linux平台始终使用英文名称，避免编码问题
-    app_name = APP_NAME_EN
+    app_name_en_exe = APP_NAME_EN_EXE
     
     # 检查图标文件是否存在
     if os.path.exists(ICON_FILE_LINUX):
@@ -223,7 +227,7 @@ def build_linux(args):
     # 构建命令
     cmd = [
         "pyinstaller",
-        f"--name={app_name}",
+        f"--name={app_name_en_exe}",
         "--windowed",
         icon_param,
         f"--add-data={ICON_DIR}:{ICON_DIR}",
@@ -251,11 +255,13 @@ def build_linux(args):
     subprocess.call(python_cmd)
     
     print("Linux应用程序构建完成!")
-    print(f"可执行文件位于: dist/{app_name}")
+    print(f"可执行文件位于: dist/{app_name_en_exe}")
     
     # 默认创建DEB安装包，除非明确指定不创建
     if not args.no_deb:
-        create_deb_package(app_name, VERSION)
+        # 动态添加版本号到安装程序名称
+        installer_name = f"{APP_NAME_INSTALLER}-v{VERSION}"
+        create_deb_package(installer_name, VERSION)
     else:
         print("已跳过DEB安装包创建")
 
