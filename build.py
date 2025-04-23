@@ -10,6 +10,7 @@ import shutil
 import platform
 import argparse
 import subprocess
+import glob
 from pathlib import Path
 
 # 从JSON文件加载应用信息
@@ -200,13 +201,25 @@ def create_dmg(app_name):
             f"--icon", f"{app_name}.app", "200", "190",
             f"--hide-extension", f"{app_name}.app",
             "--app-drop-link", "600", "185",
-            f"{app_name}.dmg",
+            f"dist/{app_name}.dmg",
             f"dist/{app_name}.app"
         ]
         
         # 执行DMG创建命令
         subprocess.call(dmg_cmd)
-        print(f"DMG安装包创建完成: {app_name}.dmg")
+        
+        # 检查并重命名可能带有前缀的DMG文件
+        for temp_dmg in glob.glob(f"dist/rw.*{app_name}.dmg"):
+            final_name = f"dist/{app_name}.dmg"
+            print(f"发现临时DMG文件: {temp_dmg}")
+            print(f"正在重命名: {temp_dmg} -> {final_name}")
+            # 如果目标文件已存在，先删除
+            if os.path.exists(final_name):
+                os.remove(final_name)
+            shutil.move(temp_dmg, final_name)
+            print(f"DMG文件重命名完成")
+            
+        print(f"DMG安装包创建完成: dist/{app_name}.dmg")
     except Exception as e:
         print(f"创建DMG时出错: {e}")
 
